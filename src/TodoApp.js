@@ -1,4 +1,14 @@
 import React, {Component} from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import logo from './logo.svg';
 import './App.css';
 import {TodoList} from "./TodoList";
@@ -8,7 +18,7 @@ import moment from "moment";
 import Login from './component/Login.js';
 
 
-class App extends Component {
+class TodoApp extends Component {
 
     constructor(props) {
         super(props);
@@ -17,8 +27,7 @@ class App extends Component {
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
+    };
 
     render() {
 
@@ -33,28 +42,28 @@ class App extends Component {
                 <br/>
                 <form onSubmit={this.handleSubmit} className="todo-form">
                     <h3>New TODO</h3>
-                    <label htmlFor="text" className="right-margin">
+                    <InputLabel htmlFor="text" className="right-margin">
                         Text:
-                    </label>
+                    </InputLabel>
 
-                    <input
+                    <Input
                         id="text"
                         onChange={this.handleTextChange}
                         value={this.state.text}>
-                    </input>
+                    </Input>
 
                     <br/>
                     <br/>
-                    <label htmlFor="priority" className="right-margin">
+                    <InputLabel htmlFor="priority" className="right-margin">
                         Priority:
-                    </label>
+                    </InputLabel>
 
-                    <input
+                    <Input
                         id="priority"
                         type="number"
                         onChange={this.handlePriorityChange}
                         value={this.state.priority}>
-                    </input>
+                    </Input>
                     <br/>
                     <br/>
 
@@ -65,9 +74,9 @@ class App extends Component {
                         onChange={this.handleDateChange}>
                     </DatePicker>
                     <br/>
-                    <button>
+                    <Button type="submit" className="submit">
                         Add #{this.state.items.length + 1}
-                    </button>
+                    </Button>
                 </form>
                 <br/>
                 <br/>
@@ -118,4 +127,4 @@ class App extends Component {
 
 }
 
-export default App;
+export default TodoApp;
