@@ -12,7 +12,13 @@ import './Login.css'
 
 
 export default class Login extends React.Component{
-
+	constructor(props) {
+        super(props);
+		this.state = {username : '', password : ''}
+        this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
+    };
+	
     render(){
         return (
             <React.Fragment>
@@ -23,10 +29,10 @@ export default class Login extends React.Component{
                             <LockIcon />
                         </Avatar>
                         <Typography variant="headline">Sign in</Typography>
-                        <form className="form">
+                        <form className="form" onSubmit={this.handleSubmit}>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                                <Input id="email" name="username" autoComplete="email" autoFocus onChange={this.handleInputChange}/>
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -35,6 +41,7 @@ export default class Login extends React.Component{
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+									onChange={this.handleInputChange}
                                 />
                             </FormControl>
                             <Button
@@ -52,5 +59,21 @@ export default class Login extends React.Component{
             </React.Fragment>
         );
     }
+	
+	handleSubmit(e){
+		//e.preventDefault();
+		console.log(this.state);
+		if(localStorage.getItem('username')===this.state.username && localStorage.getItem('password')===this.state.password){
+			localStorage.setItem('isLoggedIn', true);
+		}else{
+			localStorage.setItem('isLoggedIn', false);
+		}
+	}
+	
+	handleInputChange(e){
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	}
 
 }

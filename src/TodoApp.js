@@ -18,7 +18,7 @@ import moment from "moment";
 import Login from './component/Login.js';
 
 
-class TodoApp extends Component {
+export class TodoApp extends Component {
 
     constructor(props) {
         super(props);
@@ -32,14 +32,7 @@ class TodoApp extends Component {
     render() {
 
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">TODO React App</h1>
-                </header>
-
-                <br/>
-                <br/>
+            <div className="TodoApp">
                 <form onSubmit={this.handleSubmit} className="todo-form">
                     <h3>New TODO</h3>
                     <InputLabel htmlFor="text" className="right-margin">
@@ -81,7 +74,6 @@ class TodoApp extends Component {
                 <br/>
                 <br/>
                 <TodoList todoList={this.state.items}/>
-		<Login/>
             </div>
         );
     }
@@ -127,4 +119,3 @@ class TodoApp extends Component {
 
 }
 
-export default TodoApp;

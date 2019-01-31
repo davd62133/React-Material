@@ -6,114 +6,52 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
 import Login from './component/Login.js';
+import {TodoApp} from './TodoApp.js';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+
+//Save data
+localStorage.setItem('username', 'admin');
+localStorage.setItem('password', 'admin');
 
 
 class App extends Component {
 
-    constructor(props) {
+	constructor(props) {
         super(props);
-        this.state = {items: [], text: '', priority: 0, dueDate: moment()};
-        this.handleTextChange = this.handleTextChange.bind(this);
-        this.handlePriorityChange = this.handlePriorityChange.bind(this);
-        this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+        this.state = {isLoggedIn : localStorage.getItem('isLoggedIn')===null?false : localStorage.getItem('isLoggedIn')};
 
-
+    };
+	
     render() {
-
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">TODO React App</h1>
-                </header>
-
-                <br/>
-                <br/>
-                <form onSubmit={this.handleSubmit} className="todo-form">
-                    <h3>New TODO</h3>
-                    <label htmlFor="text" className="right-margin">
-                        Text:
-                    </label>
-
-                    <input
-                        id="text"
-                        onChange={this.handleTextChange}
-                        value={this.state.text}>
-                    </input>
+		const LoginView = () => (
+			<Login/>
+		);
+		const TodoView = () => (
+			this.state.isLoggedIn ?  <TodoApp/> : <div><h3> Se debe Ingresar Primero</h3><br/>username : admin <br/> password : admin <Login/></div>
+		);
+        return (             
+				<Router>
+                <div className="App">
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo"/>
+                        <h1 className="App-title">TODO React App</h1>
+                    </header>
 
                     <br/>
                     <br/>
-                    <label htmlFor="priority" className="right-margin">
-                        Priority:
-                    </label>
 
-                    <input
-                        id="priority"
-                        type="number"
-                        onChange={this.handlePriorityChange}
-                        value={this.state.priority}>
-                    </input>
-                    <br/>
-                    <br/>
+                    <ul>
+                        <li><Link to="/">Login</Link></li>
+                        <li><Link to="/todo">Todo</Link></li>
+                    </ul>
 
-                    <DatePicker
-                        id="due-date"
-                        selected={this.state.dueDate}
-                        placeholderText="Due date"
-                        onChange={this.handleDateChange}>
-                    </DatePicker>
-                    <br/>
-                    <button>
-                        Add #{this.state.items.length + 1}
-                    </button>
-                </form>
-                <br/>
-                <br/>
-                <TodoList todoList={this.state.items}/>
-		<Login/>
-            </div>
+                    <div>
+                        <Route exact path="/" component={LoginView}/>
+                        <Route path="/todo" component={TodoView}/>
+                    </div>
+                </div>
+            </Router>
         );
-    }
-
-    handleTextChange(e) {
-        this.setState({
-            text: e.target.value
-        });
-    }
-
-    handlePriorityChange(e) {
-        this.setState({
-            priority: e.target.value
-        });
-    }
-
-    handleDateChange(date) {
-        this.setState({
-            dueDate: date
-        });
-    }
-
-    handleSubmit(e) {
-
-        e.preventDefault();
-
-        if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
-            return;
-
-        const newItem = {
-            text: this.state.text,
-            priority: this.state.priority,
-            dueDate: this.state.dueDate,
-
-        };
-        this.setState(prevState => ({
-            items: prevState.items.concat(newItem),
-            text: '',
-            priority: '',
-            dueDate: ''
-        }));
     }
 
 }
